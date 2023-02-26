@@ -1,5 +1,5 @@
-﻿using System;
-using System.ComponentModel;
+﻿
+using System.Text;
 using WeatherDataLib;
 
 namespace WeatherStation
@@ -11,7 +11,7 @@ namespace WeatherStation
             // concrete framework
             var weatherData = new WeatherData();
 
-            // client using data from framework
+            // client using data from framework (original observer)
             var displayClient = new CurrentConditionsDisplay();
 
             // concrete interceptor providing out-of-band encryption and conversion services

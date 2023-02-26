@@ -6,12 +6,22 @@ namespace WeatherStation
     {
         public void OnPostSensorRead(IContextObject context)
         {
-            Console.WriteLine("_____Concrete OnPostSensorRead called");
+            // convert С to А
+            var fahrenheit = TempConverterService.ConvertCelsiusToFahrenheit(context.Temperature);
+            // Modify framework's state via context
+            context.Temperature = fahrenheit;
         }
 
         public void OnPreSensorDataSent(IContextObject context)
         {
-            Console.WriteLine("_____Concrete OnPreSensorDataSent called");
+            // simulate encryption of data right before sending to client
+            var encrTemp = EncryptionService.Encrypt(context.Temperature);
+            var encrHumid = EncryptionService.Encrypt(context.Humidity);
+            var encrPressure = EncryptionService.Encrypt(context.Pressure);
+
+            context.Temperature = encrTemp;
+            context.Humidity = encrHumid;
+            context.Pressure = encrPressure;
         }
     }
 }

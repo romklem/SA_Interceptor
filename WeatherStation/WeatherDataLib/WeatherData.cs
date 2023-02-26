@@ -17,6 +17,7 @@
         {
         }
 
+        #region Original observer in WeatherStation
         public void RegisterObserver(IClientObserver observer)
         {
             _clientObservers.Add(observer);
@@ -37,6 +38,7 @@
         {
             NotifyObservers();
         }
+        #endregion
 
         private void ReadAndSendSensorData()
         {
@@ -46,6 +48,7 @@
             _pressure = ReadPressureSensor();
 
             // construct ContextObject and pass to dispatcher 
+            // Using pass per-event
             var context = new ContextObject(this);
 
             // Will provide access to raw data from sensors to concrete interceptors
