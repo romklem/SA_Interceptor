@@ -9,9 +9,13 @@
         internal double _humidity;
         internal double _pressure;
 
+        public Dispatcher Dispatcher { get; } = new Dispatcher();
+
         private Random _rand = new Random();
 
-        public WeatherData(){ }
+        public WeatherData()
+        {
+        }
 
         public void RegisterObserver(IClientObserver observer)
         {
@@ -37,18 +41,18 @@
         private void ReadAndSendSensorData()
         {
             // "read" new data from sensors
-            var newTemp = ReadTempSensor();
-            var newHumid = ReadHumidSensor();
-            var newPress = ReadPressureSensor();
+            _temp = ReadTempSensor();
+            _humidity = ReadHumidSensor();
+            _pressure = ReadPressureSensor();
 
-            // call PostSensorRead() 
+            // construct ContextObject and pass to dispatcher 
+            var context = new ContextObject(this);
 
-            // set local values
-            _temp = newTemp;
-            _humidity = newHumid;
-            _pressure = newPress;
-
-            // call PreMeasurementsSent()
+            // Will provide access to raw data from sensors to concrete interceptors
+            Dispatcher.OnPostSensorRead(context);
+            
+            // Will be called right before sending data to clients
+            Dispatcher.OnPreSensorDataSent(context);
 
             // "send" data to clients via observer
             MeasurementsChanged();
