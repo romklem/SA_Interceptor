@@ -1,6 +1,4 @@
-﻿
-using System.Text;
-using WeatherDataLib;
+﻿using WeatherDataLib;
 
 namespace WeatherStation
 {
@@ -18,6 +16,7 @@ namespace WeatherStation
             var interceptor = new ConcreteInterceptor();
 
             // attach interceptor to dispatcher
+            // NOTE: For security might want to NOT expose Dispatcher and only allow registering i-ceptors via separate method
             weatherData.Dispatcher.RegisterInterceptor(interceptor);
 
             // register client with framework (original Observer pattern)

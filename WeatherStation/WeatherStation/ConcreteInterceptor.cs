@@ -6,7 +6,7 @@ namespace WeatherStation
     {
         public void OnPostSensorRead(IContextObject context)
         {
-            // convert С to А
+            // convert С to F
             var fahrenheit = TempConverterService.ConvertCelsiusToFahrenheit(context.Temperature);
             // Modify framework's state via context
             context.Temperature = fahrenheit;
