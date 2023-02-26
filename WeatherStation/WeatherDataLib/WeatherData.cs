@@ -9,12 +9,18 @@
         internal double _humidity;
         internal double _pressure;
 
-        public Dispatcher Dispatcher { get; } = new Dispatcher();
+        private ISensor _sensor;
 
-        private Random _rand = new Random();
+        public Dispatcher Dispatcher { get; } = new Dispatcher();
 
         public WeatherData()
         {
+            _sensor = new Sensor();
+        }
+
+        public WeatherData(ISensor sensor)
+        {
+            _sensor = sensor;
         }
 
         #region Original observer in WeatherStation
@@ -43,9 +49,9 @@
         private void ReadAndSendSensorData()
         {
             // "read" new data from sensors
-            _temp = ReadTempSensor();
-            _humidity = ReadHumidSensor();
-            _pressure = ReadPressureSensor();
+            _temp = _sensor.ReadTempSensor();
+            _humidity = _sensor.ReadHumidSensor();
+            _pressure = _sensor.ReadPressureSensor();
 
             // construct ContextObject and pass to dispatcher 
             // Using pass per-event
@@ -69,25 +75,6 @@
                 ReadAndSendSensorData();
                 Thread.Sleep(500);
             }
-        }
-
-        // emulate sensors by fluctuatating some fixed value
-        private double ReadPressureSensor()
-        {
-            //hPa
-            return 900 + (_rand.Next() % 2 == 0 ? 10 : -10);
-        }
-
-        private double ReadHumidSensor()
-        {
-            // %
-            return 0.3 + (_rand.Next() % 2 == 0 ? 0.01 : -0.01);
-        }
-
-        private double ReadTempSensor()
-        {
-            // degree C
-            return 20 + (_rand.Next() % 2 == 0 ? 0.1 : -0.1);
         }
     }
 }

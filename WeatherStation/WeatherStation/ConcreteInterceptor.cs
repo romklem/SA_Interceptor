@@ -2,7 +2,7 @@
 
 namespace WeatherStation
 {
-    class ConcreteInterceptor : IInterceptor
+    public class ConcreteInterceptor : IInterceptor
     {
         public void OnPostSensorRead(IContextObject context)
         {
