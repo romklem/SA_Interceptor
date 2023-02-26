@@ -4,12 +4,12 @@
     {
         private List<IClientObserver> _clientObservers = new List<IClientObserver>();
 
-        private double _temp;      
-        private double _humidity;
-        private double _pressure;
+        // note internal access mods so they are accessible in ContextObject
+        internal double _temp;
+        internal double _humidity;
+        internal double _pressure;
 
         private Random _rand = new Random();
-        private bool _exit = true;
 
         public WeatherData(){ }
 

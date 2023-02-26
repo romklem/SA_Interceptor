@@ -6,8 +6,6 @@ namespace WeatherStation
 {
     internal class Program
     {
-        private static BackgroundWorker _worker = new BackgroundWorker();
-
         static void Main(string[] args)
         {
             var weatherData = new WeatherData();
@@ -15,7 +13,6 @@ namespace WeatherStation
 
             weatherData.RegisterObserver(display);
             weatherData.Start();
-
         }
     }
 }
